@@ -2,61 +2,60 @@
 Data Analysis And Prediction Supervised Learning to Reduce Number of Booking Cancellation
 
 **Problem Statement**
+In the context of the hospitality business, if visitors make room reservations, the hotel will prepare several things to welcome their arrival, including:
+>* Contacting visitors regarding when they are expected to arrive at the hotel,
+>* Cleaning, tidying and preparing rooms according to visitor orders,
+>* Prepare food and drinks to welcome visitors,
+>* Refuse other visitors who have booked a room that has been booked (*booked room*), and
+>* Provide pick-up service at the airport/station/terminal if needed.
 
-Dalam konteks bisnis perhotelan, apabila pengunjung melakukan pemesanan kamar maka pihak hotel akan menyiapkan beberapa hal untuk menyambut kedatangan mereka, di antaranya:  
->* Menghubungi pengunjung terkait kapan perkiraan datang ke hotel,
->* Membersihkan, merapikan, dan menyiapkan kamar sesuai pesanan pengunjung,
->* Menyiapkan makanan dan minuman untuk menyambut kedatangan pengunjung,
->* Menolak pengunjung lain yang memesan kamar yang telah dipesan (*booked room*), dan
->* Memberi layanan penjemputan di bandara/stasiun/terminal apabila diperlukan.  
-
-Jika tamu tidak jadi menginap di hotel padahal sudah melakukan booking maka kamar hotel yang sudah di siapkan gagal untuk disewakan dan bisa merugikan,biaya operasional yang dikeluarkan untuk menyambut kedatangan tamu juga akan menjadi sia-sia.
+If guests do not stay at the hotel even though they have made a booking, the hotel rooms that have been prepared fail to be rented out and can be detrimental, the operational costs incurred to welcome guests will also be in vain.
 
 **Goals**
 
-Maka berdasarkan permalahan tersebut, hotel ingin memiliki kemampuan untuk memprediksi kemungkinan seorang tamu akan melakukan cancel booking atau tidak, sehingga dapat memfokuskan kamar hotel untuk di sewakan kembali jika seorang tamu melakukan cancel.
+So based on this problem, the hotel wants to have the ability to predict the possibility that a guest will cancel a booking or not, so that it can focus on hotel rooms to be rented out again if a guest cancels.
 
-Dan juga, Hotel ingin mengetahui apa faktor yang menyebabkan seorang tamu melakukan cancel ataupun tidak, sehingga mereka dapat membuat rencana yang lebih baik untuk mengurangi tingkat cancel pada tamu.
+Also, the hotel wants to know what factors cause a guest to cancel or not, so they can make a better plan to reduce the cancellation rate for guests.
 
 **Data Understanding**
 
-Dataset ini berasal dari paper Jurnal Ilmiah berjudul "Hotel booking demand datasets" yang ditulis oleh Nuno Antonio, Ana Almeida, and Luis Nunes for Data in Brief, Volume 22, February 2019. Penjelasan tiap feature/variabel dari Jurnal bisa Anda akses di  https://www.sciencedirect.com/science/article/pii/S2352340918315191
+This dataset comes from a Scientific Journal paper entitled "Hotel booking demand datasets" written by Nuno Antonio, Ana Almeida, and Luis Nunes for Data in Brief, Volume 22, February 2019. You can access an explanation of each feature/variable from the Journal at https: //www.sciencedirect.com/science/article/pii/S2352340918315191
 
-Apabila ingin mengetahui keterangan di setiap kolom, Anda bisa akses ke: https://www.kaggle.com/jessemostipak/hotel-booking-demand/data. 
+If you want to know the information in each column, you can access: https://www.kaggle.com/jessemostipak/hotel-booking-demand/data.
 
 # Data Preparation
 
-terdapat missing value yang banyak di kolom agent dan company,missing value disini tidak terlihat saling berkorelasi. tetapi untuk analysis ini kami tidak menggunakan kolom-kolom tersebut karena selain missing value nya sangat banyak dan tidak berguna dalam anaylsis ini. Ada beberapa kolom-kolom yang tidak digunakan karena tidak berfungsi untuk analysis dan modeling. Untuk kolom 'stays_in_weekend_nights','stays_in_week_nights','arrival_date_day_of_month' tidak sesuai dengan pengertian yang dimaksut seperti arrival date day of month yang nilai maximal nya mencapai 31 padahal dalam setahun hanya dalam 12 bulan. jika memang kolom tersebut dibutuhkan, bisa dibuat dari kolom resevation status date yang tersedia. Seteleh itu data sudah siap digunakan ke proses selanjutnya yaitu EDA, Business Insight dan Modelling. Setelah di cleaning data yang awalnya terdiri dari 119.390 rows dan 32 kolom menjadi 87.392 rows dan 29 kolom
+there are many missing values ​​in the agent and company columns, the missing values ​​here do not appear to be correlated with each other. but for this analysis we do not use these columns because apart from the missing values, there are many and are not useful in this analysis. There are some columns that are not used because they do not function for analysis and modeling. For the column 'stays_in_weekend_nights','stays_in_week_nights','arrival_date_day_of_month' does not match the definition intended, such as arrival date day of month whose maximum value reaches 31 even though in a year it is only 12 months. if indeed the column is needed, it can be made from the available reservation status date column. After that the data is ready to be used for the next process, namely EDA, Business Insight and Modeling. After cleaning the data, which initially consisted of 119,390 rows and 32 columns, it became 87,392 rows and 29 columns
 
 # Modeling
 
-Model yang dipiliah adalah random forest. Didasari dari model tree, random forest memiliki keunggulan menjadi model yang lebih stabil karena melakukan atau membuat pohon keputusan sesuai dengan n estimator yang sudah kita tentukan, dari percobaan pohon keputusan berulang dengan feature yang berbeda lalu score nya diambil dari penilaian seluruh pohon yang dibuat. Upaya yang telah dilakukan untuk membuat model menjadi lebih baik dilakukanlah tunning dengan memasukan params grid maxdepth untuk menentukan sebarapa dalam pohon kita, min samples leaf untuk menentukan berapa minimum samples yang ada di daun pohon keputusan, dan min sample split untuk menentukan minimum sample sebelum suatu leaf di split kembali, tetapi hasil tidak berubah signikfikan karena itu cukup menggunakan model benchmark yang sudah kita tentukan.
+The selected model is a random forest. Based on the tree model, random forest has the advantage of being a more stable model because it performs or makes a decision tree according to the n estimators that we have determined, from repeated decision tree experiments with different features and then the score is taken from the assessment of the entire tree made. Efforts have been made to make the model better, tuning is done by entering the maxdepth params grid to determine how deep our tree is, min samples leaf to determine how many minimum samples are in the leaf of the decision tree, and min sample split to determine the minimum sample before a leaf. split again, but the results do not change significantly because it is enough to use the benchmark model that we have determined.
 
 # Evaluation
 
-Model memprediksi user akan *cancel booking* (membatalkan pesanan), padahal sebenarnya/realisasinya user tidak membatalkan pesanan. **FP**
+The model predicts the user will *cancel booking* (cancelling the order), when in fact/actually the user does not cancel the order. **FP**
 
-kerugian yang didapat ketika kita mengabaikan **FP** : 
-* dapat merugikan hotel karena bisa dilihat dari data analysis diatas ketika kita memprediksi user akan cancel booking, padahal realitanya user tidak cancel, akan membuat customer merasa dirugikan dan hotel akan kehilangan customer
-* dari barplot market segment diatas, 47,43% customer memesan kamar hotel melalui online travel agent, dan yang sudah kita ketahui ketika kita memesan kamar di online travel agent akan ada rating yang diberikan oleh customer kepada hotel. Ketika customer yang kita prediksi merasa dirugikan memberikan rating yang buruk, akan berdampak pada rating hotel di suatu online travel agent dan dapat menurunkan minat customer lain untuk memesan hotel
+the downsides when we ignore **FP** :
+* can be detrimental to the hotel because it can be seen from the data analysis above when we predict the user will cancel the booking, even though in reality the user does not cancel, it will make the customer feel disadvantaged and the hotel will lose the customer
+* From the barplot of the market segment above, 47.43% of customers book hotel rooms through online travel agents, and what we already know when we book a room at an online travel agent there will be a rating given by the customer to the hotel. When the customer we predict feels disadvantaged gives a bad rating, it will have an impact on the hotel rating in an online travel agent and can reduce the interest of other customers to book a hotel.
 
-Model memprediksi user tidak membatalkan pesanan, padahal sebenarnya/realisasinya user *cancel booking* (membatalkan pesanan). **FN**
+The model predicts the user does not cancel the order, when in fact/actually the user *cancel booking* (cancels the order). **FN**
 
-kerugian yang didapat ketika mengabaikan **FN**:
-* kerugian pada FP bisa dilihat dari benefit dan persiapan yang kita berikan ketika tamu diprediksi tidak cancel booking. mulai dari layanan penjemputan jika diperlukan, makan dan minum yang sudah disiapkan dan yang paling merugikan adalah ketika ternyata pengunjung yang diprediksi tidak cancel dan aktual nya cancel, hotel akan rugi karena tidak bisa menyewakan kamar hotel tersebut. 
+disadvantages of ignoring **FN**:
+* Losses on FP can be seen from the benefits and preparations we provide when guests are predicted not to cancel their bookings. starting from the pick-up service if needed, eating and drinking that has been prepared and the most detrimental is when it turns out that the predicted visitor did not cancel and actually cancels, the hotel will lose because it cannot rent out a hotel room
 
-Scoring yang dipilih adalah f1 score karena kedua kelas tersebut sama-sama dapat memberikan kerugian yang sama besar untuk hotel
+The chosen scoring is f1 score because both classes can provide the same big loss for the hotel
 
 # Conclusion
 
- dari analysis dan visualisasi barplot berdasarkan kolom is_canceled, 37,13% tamu melakukan cancel terhadap pemesanannya. berarti 44.152 orang yang melakukan pembatalan pesanan, jika menggunakan metrics f1 dengan score 74%, maka 26% dari tamu `datang/tidak cancel` tetapi diprediksi cancel, dengan market segment online TA sekitar 30.912 orang yang kemungkinan memberikan rating buruk terhadap hotel karena ketika dia tiba dihotel padahal sudah di prediksi akan melakukan cancel.
+ from the analysis and visualization of the barplot based on the is_cancelled column, 37.13% of guests canceled their bookings. This means that 44,152 people canceled orders, if using metrics f1 with a score of 74%, then 26% of guests `came/didn't cancel` but were predicted to cancel, with the TA online market segment of around 30,912 people who probably gave a bad rating to the hotel because when they arrived at the hotel even though it was predicted to cancel.
 
-Jika diasumsikan kamar di hotel ini adalah 1jt per malam, mungkin hotel bisa dibilang rugi 44.152.000.000 karena kamar tersebut gagal di gunakan padahal sudah dibooking, saat suatu kamar di booking hotel tentu tidak dapat menyewakan kamar tersebut ke tamu lainnya. jika menggunakan model dari metrics f1 score ini, 26% tamu yang diprediksi tidak cancel actualnya cancel maka kita dapat mengurangi kerugian dari gagal nya penyewaan kamar menjadi 30.912.000.000. menurut kami hal tersebut sudah cukup baik karena dapat mengurangi kerugian hotel sebanyak 14 milyar.
+If it is assumed that the rooms in this hotel are 1 million per night, maybe the hotel can be said to have lost 44,152,000,000 because the room failed to be used even though it was already booked, when a room is booked at the hotel, of course it cannot rent out the room to other guests. If using the model from the metrics f1 score, 26% of guests who were predicted not to cancel actually cancel, then we can reduce the loss from the failed room rental to 30,912,000,000. In our opinion, this is quite good because it can reduce hotel losses by as much as 14 billion.
 
-* FP dapat merugikan hotel walaupun dampak yang di dapat tidak langsung, tetapi akan berdampak besar di masa yang akan datang karena customer yang dirugikan mungkin tidak akan memesan hotel ini, dan jika mengabaikan FP akan membuat rating buruk di online travel agent yang sudah menjadi market segment terbesar di hotel ini. Sedangkan FN berdampak langsung bagi hotel, bisa dihitung kerugian dari FN mencapai 30M. 
+* FP can harm the hotel even though the impact is indirect, but it will have a big impact in the future because customers who are harmed may not book this hotel, and if you ignore FP it will create a bad rating on online travel agents who have become a market segment biggest in this hotel. While FN has a direct impact on hotels, it can be calculated that the loss from FN reaches 30M.
 
-# Recomendation
+# Recommendation
 
-* Saya merekomendasikan hotel untuk menggunakan model ini karena bisa mengurangi 14ribu orang yang melakukan cancel, jika diasumsikan kamar 1 malam adalah 1jt, maka model ini mampu mengurangi kerugian sebanyak 14M, tetapi untuk meminimalisir FN yaitu tamu yang di prediksi tidak cancel tetapi aktual nya cancel bisa meninjau perjanjian kerja sama dengan travel agent baik itu Online atau Offline dimana sudah menjadi market segment terbesar dari hotel ini untuk menentukan batas minimum hari sebelum melakukan cancel, sehingga hotel dapat menyewakan kamar yang tidak jadi disewa.
+* I recommend hotels to use this model because it can reduce 14 thousand people who cancel, if it is assumed a 1 night room is 1 million, then this model is able to reduce losses as much as 14 million, but to minimize FN, i.e. guests who are predicted to not cancel but can actually cancel reviewing cooperation agreements with travel agents, whether online or offline, which have become the largest market segment of this hotel to determine the minimum day limit before canceling, so that the hotel can rent out rooms that are not rented.
 
-* Dan Untuk mengurangi FP atau tamu yang diprediksi cancel tetapi aktualnya tidak, tim customer service bisa menelfon atau melakukan whatsapp untuk mengkonfirmasi kedatangan sehingga dapat mengurangi kemungkinan mengecewakan tamu yang benar benar akan datang sehingga membuat rating hotel tetap baik.
+* And to reduce FP or guests who are predicted to cancel but actually don't, the customer service team can call or whatsapp to confirm arrival so that it can reduce the possibility of disappointing guests who will actually come so as to keep the hotel rating good.
